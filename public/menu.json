@@ -1,0 +1,16 @@
+{
+    "menus":[
+        {
+            "id":0,
+            "name":"Home",
+            "icon":"abc",
+            "url":"/"
+        },
+        {
+            "id":0,
+            "name":"Bank",
+            "icon":"abc",
+            "url":"/bank"
+        }
+    ]
+}
