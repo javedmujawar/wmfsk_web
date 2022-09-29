@@ -2,9 +2,12 @@
 import {  Row,
   Col,
   Card,
-  Radio,Form, Input, Button, Select } from 'antd';
+  Radio,Form, Input, Button, Select} from 'antd';
+  import { Link, useParams } from "react-router-dom";
+  import MainCard from "../components/MainCard";
+  import { Grid, Typography } from "@mui/material";
 const { Option } = Select;
-
+const { TextArea } = Input;
 const layout = {
   labelCol: { span: 8 },
   wrapperCol: { span:16 },
@@ -45,73 +48,90 @@ function Bank(){
   };
 
   return (
-    <>
-    <div className="tabled">
-      <Row gutter={[24, 0]}>
-        <Col xs="24" xl={24}>
-          <Card
-            bordered={false}
-            className="criclebox tablespace mb-24"
-            title="Banks"
-            extra={
-              <>
-                <Radio.Group  defaultValue="a">
-                  <Radio.Button value="a">All</Radio.Button>
-                  <Radio.Button value="b">ONLINE</Radio.Button>
-                </Radio.Group>
-              </>
-            }
-          >
-    <Form {...layout} form={form} name="control-hooks" onFinish={onFinish}>
-      <Row gutter={[20, 4]}>
-      <Col xs="11" xl={12}>
-      <Form.Item name="bankName" label="Bank Name" rules={[{ required: true }]}>
-        <Input />
-      </Form.Item>
-      </Col>
-      <Col xs="11" xl={12}>
-      <Form.Item name="gender" label="Gender" rules={[{ required: true }]}>
-        <Select
-          placeholder="Select a option and change input text above"
-          onChange={onGenderChange}
-          allowClear
-        >
-          <Option value="male">male</Option>
-          <Option value="female">female</Option>
-          <Option value="other">other</Option>
-        </Select>
-      </Form.Item>
-      </Col>
-      </Row>
-      <Form.Item
-        noStyle
-        shouldUpdate={(prevValues, currentValues) => prevValues.gender !== currentValues.gender}
-      >
-        {({ getFieldValue }) =>
-          getFieldValue('gender') === 'other' ? (
-            <Form.Item name="customizeGender" label="Customize Gender" rules={[{ required: true }]}>
-              <Input />
-            </Form.Item>
-          ) : null
+    <Form
+    name="frmbank"
+    layout="vertical"
+    // initialValues={{
+    //   remember: true,
+    // }}
+    // form={form} // Add this!
+    
+    // labelCol={{ span: 22 }}
+    // wrapperCol={{ span: 22 }}      
+    // onFinish={onFinish}
+    // onFinishFailed={onFinishFailed}
+    // autoComplete="off"
+  >
+    <MainCard
+        title={ "Bank"}
+        secondary={
+          <div>
+            <Button
+              type="primary"
+              htmlType="submit"
+              style={{ marginRight: "10px" }}
+            >
+              Save
+            </Button>
+            <Link to={"/bank"}>
+              <Button type="danger">Cancel</Button>
+            </Link>
+          </div>
         }
-      </Form.Item>
-      <Form.Item {...tailLayout}>
-        <Button type="primary" htmlType="submit">
-          Submit
-        </Button>
-        <Button htmlType="button" onClick={onReset}>
-          Reset
-        </Button>
-        <Button type="link" htmlType="button" onClick={onFill}>
-          Fill form
-        </Button>
-      </Form.Item>
+      >
+
+<Typography variant="body2">
+          <Grid container spacing={2}>
+            <Grid item xs={6}>
+              <Form.Item
+                label="Name"
+                name="name"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please enter name.",
+                  },
+                ]}
+              >
+                <Input  placeholder="Enter Bank Name"/>
+              </Form.Item>
+            </Grid>
+            <Grid item xs={6} >
+              <Form.Item label="Account Numner" name="accountNumber" id="accountNumber"
+               rules={[ { required: true,  message: "Please account number.", }, ]} >
+                <Input placeholder="Enter Account Number"/>
+              </Form.Item>
+            </Grid>
+            <Grid item xs={6} >
+              <Form.Item label="IFSC Code" name="ifdcCode" id="ifdcCode"
+               rules={[ { required: true,  message: "Please IFSC code.", }, ]} >
+                <Input placeholder="Enter IFSC Code"/>
+              </Form.Item>
+            </Grid>
+            <Grid item xs={6}>
+              <Form.Item label="Status" id="Status" name="Status"
+              rules={[
+                {
+                  required: true,
+                  message: "Please select status.",
+                },
+              ]}>
+                <Select placeholder="Select Status">
+                  <option  value="A">Action</option>
+                  <option  value="I">Inactive</option>
+                  <option  value="C">Closed</option>
+                </Select>
+              </Form.Item>
+            </Grid>
+            <Grid item xs={6}>
+              <Form.Item label="Address" name="address">
+                <TextArea rows={2} placeholder="Address" />
+              </Form.Item>
+            </Grid>
+          </Grid>
+        </Typography>
+      </MainCard>
     </Form>
-    </Card>
-    </Col>
-    </Row>
-    </div>
-    </>
   );
 };
 
